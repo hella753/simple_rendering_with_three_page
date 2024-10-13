@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from .models import Category, Product
-from django.db.models import Max, F, Min, Sum
+from django.db.models import Max, F, Min, Sum, Count, Avg
 
 
 def index(request):
@@ -10,21 +10,20 @@ def index(request):
     categories_dict = {}
     categories_list = []
     for category_each in categories:
-        # ვიღებთ ყველა ქვეკატეგორიას და წინასწარ მოგვაქვს პროდუქტები
+        # ვიღებთ ყველა ქვეკატეგორიას
         subcategories = (
             category_each
             .get_descendants(include_self=True)
-            .prefetch_related("product_set")
         )
-        counter = 0
-        for subcategory in subcategories:
-            # თითოეული ქვეკატეგორიისთვის ვითვლით
-            # რამდენი პროდუქტი აქვს და ვინახავთ dictionary-ში
-            sets = subcategory.product_set.all()
-            counter += len(sets)
-            categories_dict["category_name"] = category_each.category_name
-            categories_dict["product_count"] = counter
-            categories_dict["id"] = category_each.id
+        # ვამატებთ count-ს რომელიც დაითვლის თითოეული ქვეკატეგორიის პროდუქტების რაოდენობას
+        product_counted = subcategories.annotate(products_count=Count("product"))
+
+        # ვჯამავთ თითოეულ ქვეკატეგორიაში products_count ველის მნიშვნელობებს
+        total_product_count = product_counted.aggregate(total_count=Sum("products_count"))
+
+        categories_dict["category_name"] = category_each.category_name
+        categories_dict["product_count"] = total_product_count["total_count"]
+        categories_dict["id"] = category_each.id
         categories_list.append(categories_dict)
         categories_dict = {}
     context = {
@@ -36,62 +35,36 @@ def index(request):
 def category_listings(request, category_id):
     # ვიღებთ კატეგორიას ID-ის მიხედვით
     individual_category = Category.objects.get(id=category_id)
-    # ვიღებთ კატეგორიის ქვეკატეგორიებს
+    # ვიღებთ კატეგორიის ქვეკატეგორიებს და წინასწარ მოგვაქვს პროდუქტები დასარენდერებლად
     subcategories = individual_category.get_descendants(include_self=True)
 
-    # ვქმნი ცვლადებს რომელიც იქნება პროდუქტის კონტეინერი
+    # ყველაზე ძვირიანი პროდუქტის ფასი
+    most_expensive = subcategories.aggregate(max_price=Max("product__product_price"))
+    # ყველაზე იაფიანი პროდუქტის ფასი
+    cheapest = subcategories.aggregate(min_price=Min("product__product_price"))
+    # საშუალო ფასი
+    average_price = subcategories.aggregate(avg_price=Avg("product__product_price"))
+    # ვჯამავთ ყველა პროდუქტის ჯამი*რაოდენობას
+    sum_total = subcategories.annotate(sum_each=F("product__product_quantity")*F("product__product_price"))
+    subtotal = sum_total.aggregate(subtotal=Sum("sum_each"))
+
     product_dict = {}
     product_list = []
-
-    # ცვლადები რომლებიც დამეხმარება max და min მნიშვნელობების პოვნაში
-    mx, all_sum, mx_value, mn_value, mn = 0, 0, None, None, 9999999999
-
-    # აჯამებისთვის და რაოდენობისთვის
-    summed, counter = 0, 0
-
     for subcategory in subcategories:
         # ყველა პროდუქტი ქვეკატეგორიაში
         sets = subcategory.product_set.all()
 
-        # ვამატებთ ჯამურ ფასს ერთეული*ფასი და პროდუქტის ფასის ჯამს
-        summed_set = sets.annotate(
-            sum=F("product_quantity")*F("product_price"),
-            sum_price=Sum("product_price")
-        )
+        # თითოეული პროდუქტის ფასი*რაოდენობა
+        sets = sets.annotate(sum=F("product_quantity")*F("product_price"))
+        for each_set in sets:
+            product_dict["name"] = each_set.product_name
+            product_dict["total_sum"] = each_set.sum
+            product_dict["price"] = each_set.product_price
+            product_dict["image"] = each_set.product_image
+            product_dict["id"] = each_set.id
+            product_list.append(product_dict)
+            product_dict = {}
 
-        # საშუალოს გამოსათვლელად გვჭირდება პროდუქტის ფასების ჯამი
-        summed_agg = summed_set.aggregate(sum=Sum("sum_price"))
-        if summed_agg["sum"]:
-            # ვზრდით და ვინახავთ ჯამებს და რაოდენობებს
-            summed += summed_agg["sum"]
-            counter += len(summed_set)
-
-        # ვპოულობთ min და max მარტივი გზით(ასევე პროდუქტებსაც ამ ფასებით)
-        max_in_set = sets.aggregate(max=Max("product_price"))
-        min_in_set = sets.aggregate(min=Min("product_price"))
-
-        if max_in_set["max"] and max_in_set["max"] > mx:
-            mx = max_in_set["max"]
-            mx_value = sets.filter(product_price=mx).all()
-        if min_in_set["min"] and min_in_set["min"] < mn:
-            mn = min_in_set["min"]
-            mn_value = sets.filter(product_price=mn).all()
-
-        # თუ სეტი შეიცავს ელემენტებს მაშინ ავაწყოთ
-        # პროდუქტისთვის საჭირო დიქშენერი
-        if len(summed_set) > 0:
-            for each_set in summed_set:
-                product_dict["name"] = each_set.product_name
-                product_dict["total_sum"] = each_set.sum
-                product_dict["price"] = each_set.product_price
-                product_dict["image"] = each_set.product_image
-                product_dict["id"] = each_set.id
-
-                # ეს გვჭირდება ყველა პროდუქტის ჯამური ღირებულება რომ დავთვალოთ
-                all_sum += each_set.sum
-
-                product_list.append(product_dict)
-                product_dict = {}
     paginator = Paginator(product_list, 6)
     page_number = request.GET.get('page')
     products_objects = paginator.get_page(page_number)
@@ -99,12 +72,10 @@ def category_listings(request, category_id):
         'subcategories': subcategories,
         'category': individual_category,
         'products': product_list,
-        'max_price': mx,
-        'max_value': mx_value,
-        'min_price': mn,
-        'min_value': mn_value,
-        'average': summed/counter,
-        'all_sum': all_sum,
+        'max_price': most_expensive["max_price"],
+        'min_price': cheapest["min_price"],
+        'average': average_price["avg_price"],
+        'all_sum': subtotal["subtotal"],
         'products_objects': products_objects,
     }
     return render(request, "category.html", context)
