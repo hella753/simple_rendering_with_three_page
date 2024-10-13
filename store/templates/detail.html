@@ -1,0 +1,59 @@
+{% load static %}
+
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="{% static 'store/style.css' %}">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link
+                rel="preconnect"
+                href="https://fonts.googleapis.com">
+        <link
+                rel="preconnect"
+                href="https://fonts.gstatic.com" crossorigin>
+        <link
+                href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap"
+                rel="stylesheet">
+        <title>{{ product.product_name }}</title>
+    </head>
+    <body>
+        <p>
+            {% for cat in product.product_categories %}
+                <p class="cat_p">
+                    {{ cat.name }} |
+                </p>
+            {% endfor %}
+        </p>
+        <h1 class="title">{{ product.product_name }}</h1>
+        <div>
+            <p class="description">
+                პროდუქტის აღწერა: {{ product.product_description }}
+            </p>
+            <div class="ending_div">
+                <p>
+                    <img class="image_product" src="{{ product.product_image }}"  alt="{{ product }}"/>
+                </p>
+                <p>
+                    პროდუქტის ფასი: {{ product.product_price }} ლარი
+                </p>
+                <p>
+                    პროდუქტის რაოდენობა მარაგში: {{ product.product_quantity }}
+                </p>
+            </div>
+        </div>
+        <div class="products">
+            {% for obj in page_obj %}
+                <li class="product">
+                    <a style="color: #674188" class="link_to_detail" href="http://localhost:8000/{{ category.id }}/products/{{ obj.id }}">
+                        <div>
+                            <img class="image" src="http://localhost:8000/media/{{ obj.image }}"  alt="{{ obj }}"/>
+                            <p>{{ obj.name }}</p>
+                            <p>ერთეულის ფასი: {{ obj.price }}</p>
+                            <p>მარაგის საერთო ჯამური ღირებულება: {{ obj.total_sum }}</p>
+                        </div>
+                    </a>
+                </li>
+            {% endfor %}
+        </div>
+    </body>

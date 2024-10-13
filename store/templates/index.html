@@ -1,0 +1,49 @@
+{% load static %}
+<html lang="en">
+    <head>
+        <title>კატეგორიები</title>
+        <link rel="stylesheet" href="{% static 'store/style.css' %}">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link
+                rel="preconnect"
+                href="https://fonts.googleapis.com">
+        <link
+                rel="preconnect"
+                href="https://fonts.gstatic.com" crossorigin>
+        <link
+                href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap"
+                rel="stylesheet">
+    </head>
+    <body>
+        <h1>
+            კატეგორიები
+        </h1>
+        <p>
+            კეთილი იყოს შენი ფეხი მუსიკალური ინსტრუმენტების მაღაზიაში!
+        </p>
+        <p>
+            მოძებნე პროდუქტები კატეგორიის მიხედვით.
+        </p>
+        <p>
+            დააჭირე კატეგორიას იმისათვის რომ ნახო კატეგორიის პროდუქტები.
+        </p>
+        <div class="categories">
+            {% for category in categories %}
+                <a href="http://localhost:8000/{{ category.id }}/products">
+                <ul>
+                    <li>
+                        <div class="category">
+                            {{ category.category_name }}
+                            {{ category.product_count }}
+                        </div>
+                    </li>
+                </ul>
+                </a>
+            {% endfor %}
+        </div>
+
+
+    </body>
+</html>

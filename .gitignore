@@ -1,0 +1,8 @@
+.idea/
+__pycache__/
+simple_rendering_with_three_page/__pycache__/
+order/__pycache__/
+order/migrations/__pycache__/
+store/__pycache__/
+store/migrations/__pycache__/
+venv/
