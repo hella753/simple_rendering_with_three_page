@@ -1,7 +1,7 @@
 body {
     background-color: #F7EFE5;
     color: #C8A1E0;
-    font-family: Afacad Flux, serif;
+    font-family: Afacad Flux, Noto Serif Georgian, Serif;
 }
 
 h1 {
@@ -162,5 +162,5 @@ a:visited {
 }
 
 .for_margin{
-    margin-top: 70px;
+    margin-top: 10px;
 }
