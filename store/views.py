@@ -112,6 +112,7 @@ def product(request, category_id, product_id):
     product_dictionary["product_categories"] = category_list
     context = {
         'product': product_dictionary,
+        'product_id': product_id,
         'category_id': category_id
     }
 

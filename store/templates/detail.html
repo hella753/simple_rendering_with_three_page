@@ -25,35 +25,28 @@
                 </p>
             {% endfor %}
         </p>
-        <h1 class="title">{{ product.product_name }}</h1>
         <div>
-            <p class="description">
-                პროდუქტის აღწერა: {{ product.product_description }}
-            </p>
             <div class="ending_div">
-                <p>
+                <p class="image_p">
                     <img class="image_product" src="{{ product.product_image }}"  alt="{{ product }}"/>
                 </p>
-                <p>
-                    პროდუქტის ფასი: {{ product.product_price }} ლარი
-                </p>
-                <p>
-                    პროდუქტის რაოდენობა მარაგში: {{ product.product_quantity }}
-                </p>
+                <div class="product_info">
+                    <h1 class="title align_start for_margin">{{ product.product_name }}</h1>
+                    <p class="align_start prod_id">
+                        პროდუქტის ID: {{ product_id }}
+                    </p>
+                    <p class="price">
+                        <span class="price_big">₾{{ product.product_price }} </span>
+                    </p>
+                    <p class="desc">
+                        პროდუქტის აღწერა: <p class="description align_start">{{ product.product_description }}</p>
+                    </p>
+
+                    <p class="align_start">
+                        <span class="maragi">პროდუქტის რაოდენობა მარაგში:</span>
+                        <p class="align_start">{{ product.product_quantity }}</p>
+                    </p>
+                </div>
             </div>
-        </div>
-        <div class="products">
-            {% for obj in page_obj %}
-                <li class="product">
-                    <a style="color: #674188" class="link_to_detail" href="http://localhost:8000/{{ category.id }}/products/{{ obj.id }}">
-                        <div>
-                            <img class="image" src="http://localhost:8000/media/{{ obj.image }}"  alt="{{ obj }}"/>
-                            <p>{{ obj.name }}</p>
-                            <p>ერთეულის ფასი: {{ obj.price }}</p>
-                            <p>მარაგის საერთო ჯამური ღირებულება: {{ obj.total_sum }}</p>
-                        </div>
-                    </a>
-                </li>
-            {% endfor %}
         </div>
     </body>
