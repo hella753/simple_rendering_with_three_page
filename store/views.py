@@ -74,7 +74,7 @@ def category_listings(request, category_id):
         'products': product_list,
         'max_price': most_expensive["max_price"],
         'min_price': cheapest["min_price"],
-        'average': average_price["avg_price"],
+        'average': round(average_price["avg_price"]),
         'all_sum': subtotal["subtotal"],
         'products_objects': products_objects,
     }
