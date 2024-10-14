@@ -85,7 +85,7 @@ For testing purposes there are 23 products, 19 categories records in the databas
 
 ## **Features** ##
 * **Category** - Can be accessed at `/` or `/category/` Displays the 6 root categories with links to each category page.
-* **Category Products Page** - Can be accessed at `/category/{category_id}/`. Displays all the products in that category or in its subcategories with statistics about the category and total sum of the product price including its quantity. Uses **Pagination** and Only 6 products are displayed in one page with their prices and images and each product is linked to its detail page. 
+* **Category Products Page** - Can be accessed at `/category/{category_id}/products`. Displays all the products in that category or in its subcategories with statistics about the category and total sum of the product price including its quantity. Uses **Pagination** and Only 6 products are displayed in one page with their prices and images and each product is linked to its detail page. 
   * Statistics are displayed based on the provided tasks which are:
     * The price of the most expensive product in the category
     * The price of the cheapest product in the category
