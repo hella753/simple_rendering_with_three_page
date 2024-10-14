@@ -91,7 +91,7 @@ For testing purposes there are 23 products, 19 categories records in the databas
     * The price of the cheapest product in the category
     * The average price of the products
     * The Total sum of all the products prices including its quantities.
-* **Product Detail Page** - Can be accessed `/category/{category_id}/products/{product_id}` and Displays the information about the individual Product such as name, description, price, parent categories, image and quantity.
+* **Product Detail Page** - Can be accessed `/category/{category_id}/products/{product_id}` and Displays the information about the individual Product such as id, name, description, price, parent categories, image and quantity.
 * **Admin Panel** - Can be accessed at `/admin/`. Default username: `admin`, password: `admin`.
 * **Database** - sqlite3 database is used.
 
