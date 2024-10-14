@@ -36,7 +36,7 @@ li{
     line-height: 140px;
     border: 3px solid #F7EFE5;
     background-color: #E2BFD9;
-    border-radius: 140px;
+    border-radius: 25px;
     margin: auto auto;
     text-align: center;
     color: #674188;
@@ -49,7 +49,7 @@ li{
 }
 
 .product:hover{
-    border: 5px solid #674188;
+    box-shadow: 1px 5px 10px 10px rgb(103,65,136,0.5)
 }
 
 a:link {
@@ -87,7 +87,6 @@ a:visited {
     width: 450px;
     height: 450px;
     margin: auto;
-    border: 5px solid white;
     cursor: pointer;
 }
 
@@ -114,7 +113,7 @@ a:visited {
 .image_product{
     width: 600px;
     height: 600px;
-    border: 5px solid #C8A1E0;
+    box-shadow: 1px 2px 7px 7px rgb(200, 161, 224, 0.5);
     margin-bottom: 10px;
 }
 .image_p{
