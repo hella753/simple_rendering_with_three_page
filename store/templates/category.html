@@ -41,7 +41,7 @@
         <div class="products">
             {% for product_obj in products_objects %}
                 <li class="product">
-                    <a style="color: #674188" class="link_to_detail" href="http://localhost:8000/{{ category.id }}/products/{{ product_obj.id }}">
+                    <a style="color: #674188" class="link_to_detail" href="http://localhost:8000/category/{{ category.id }}/products/{{ product_obj.id }}">
                         <div>
                             <img class="image" src="http://localhost:8000/media/{{ product_obj.image }}"  alt="{{ product_obj }}"/>
                             <p>{{ product_obj.name }}</p>
