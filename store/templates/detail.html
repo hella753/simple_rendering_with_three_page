@@ -30,11 +30,11 @@
 </p>
 <div>
     <!--Displays Product Information: image, id, price, description and quantity-->
-    <div class="product_info">
+    <div class="product_info_container">
         <p class="image_p">
             <img class="image_product" src="{{ product.product_image }}" alt="{{ product }}"/>
         </p>
-        <div class="product_info">
+        <div>
             <h1 class="title align_start for_margin">{{ product.product_name }}</h1>
             <p class="align_start prod_id">
                 პროდუქტის ID: {{ product_id }}

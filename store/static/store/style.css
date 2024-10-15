@@ -1,7 +1,14 @@
 /* ---------------HTML elements---------------- */
+:root {
+    --light-peach: #F7EFE5;
+    --white: #ffffff;
+    --mid-pink: #C8A1E0;
+    --light-pink: #E2BFD9;
+    --dark-violet: #674188;
+}
 body {
-    background-color: #F7EFE5;
-    color: #C8A1E0;
+    background-color: var(--light-peach);
+    color: var(--mid-pink);
     font-family: Afacad Flux, Noto Serif Georgian, Serif;
 }
 
@@ -16,23 +23,23 @@ p {
 }
 
 li{
-    color:#674188;
+    color: var(--dark-violet);
     list-style-type: none;
     font-weight: bolder;
 }
 
 a:link {
-    color: #674188;
+    color: var(--dark-violet);
     text-decoration: none;
 }
 
 a {
-    color: #674188;
+    color: var(--dark-violet);
     text-decoration: none;
 }
 
 a:visited {
-    color: #674188;
+    color: var(--dark-violet);
     text-decoration: none;
 }
 
@@ -40,7 +47,7 @@ a:visited {
 .title{
     text-align: center;
     margin-bottom: 0;
-    color: #C8A1E0;
+    color: var(--mid-pink);
 }
 
 .image{
@@ -83,12 +90,12 @@ a:visited {
     width: 280px;
     height: 150px;
     line-height: 140px;
-    border: 3px solid #F7EFE5;
-    background-color: #E2BFD9;
+    border: 3px solid var(--light-peach);
+    background-color: var(--light-pink);
     border-radius: 25px;
     margin: auto auto;
     text-align: center;
-    color: #674188;
+    color: var(--dark-violet);
     cursor: pointer;
 }
 
@@ -112,7 +119,7 @@ a:visited {
 
 /* product in products */
 .product{
-    background-color: white;
+    background-color: var(--white);
     width: 450px;
     height: 450px;
     margin: auto;
@@ -125,7 +132,7 @@ a:visited {
 
 /* <a> tag text color */
 .link_to_detail {
-    color: #674188;
+    color: var(--dark-violet);
 }
 
 /* ---------product detail---------- */
@@ -144,7 +151,7 @@ a:visited {
 }
 
 /* grid display image on left side, info on right side */
-.product_info{
+.product_info_container{
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin-bottom: 40px;
@@ -152,16 +159,15 @@ a:visited {
 
 /* product categories text */
 .cat_p{
-    color: #674188;
+    color: var(--dark-violet);
     display: inline-block;
 }
-
 
 /* product info styles*/
 .desc{
     margin-top: 50px;
     text-align: start;
-    color: #674188;
+    color: var(--dark-violet);
 }
 
 .price{
@@ -171,7 +177,7 @@ a:visited {
 
 .price_big{
     font-size: 32px;
-    color: #674188;
+    color: var(--dark-violet);
 }
 
 .maragi{
