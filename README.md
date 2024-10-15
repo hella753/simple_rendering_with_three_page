@@ -60,9 +60,9 @@ Manually generated fields are:
 
 **store_product:**
 
-| id | product_name | product_description | product_image | product_price | product_category | product_quantity |
-|----|--------------|---------------------|---------------|---------------|------------------|------------------|
-| 1  | _name_       | _description_       | _image_       | _price_       | _category_       | _number_         |
+| id | product_name | product_description | product_image | product_price | product_quantity |
+|----|--------------|---------------------|---------------|---------------|------------------|
+| 1  | _name_       | _description_       | _image_       | _price_       | _number_         |
 
 
 **store_product_product_category:**
