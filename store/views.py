@@ -9,6 +9,7 @@ from django.db.models import Max, F, Min, Sum, Count, Avg
 def index(request):
     # ვიღებთ ყველა კატეგორიას რომელსაც მშობელი არ ჰყავს
     categories = Category.objects.all().filter(parent__isnull=True)
+    products = Product.objects.all().distinct()
     categories_dict = {}
     categories_list = []
     for category_each in categories:
@@ -17,15 +18,11 @@ def index(request):
             category_each
             .get_descendants(include_self=True)
         )
-        # ვამატებთ count-ს რომელიც დაითვლის თითოეული ქვეკატეგორიის პროდუქტების რაოდენობას
-        product_counted = subcategories.annotate(products_count=Count("product"))
-        print(subcategories)
-
         # ვჯამავთ თითოეულ ქვეკატეგორიაში products_count ველის მნიშვნელობებს
-        total_product_count = product_counted.aggregate(total_count=Sum("products_count"))
-
+        products_in_category = products.filter(product_category__in=subcategories)
+        product_counted = products_in_category.aggregate(products_count=Count("id"))
         categories_dict["category_name"] = category_each.category_name
-        categories_dict["product_count"] = total_product_count["total_count"]
+        categories_dict["product_count"] = product_counted["products_count"]
         categories_dict["id"] = category_each.id
         categories_list.append(categories_dict)
         categories_dict = {}
