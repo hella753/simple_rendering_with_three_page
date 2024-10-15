@@ -98,9 +98,9 @@ For testing purposes there are 23 products, 19 categories records in the databas
 ## Dependencies
 * **Python 3.X**
 * **Django 5.1.1**
-* **Pillow 10.4.0**
-* **Django-debug-toolbar**
-* **Django-mptt**
+* **Pillow 10.4.0** - Python Imaging Library adds image processing capabilities to your Python interpreter.
+* **Django-debug-toolbar** - Configurable set of panels that display various debug information about the current request/response.
+* **Django-mptt** - Reusable Django app which aims to make it easy for you to use MPTT(a technique for storing hierarchical data in a database).
 
 ## Usage
 Clone the repository:
