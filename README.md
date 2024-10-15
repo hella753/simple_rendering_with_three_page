@@ -84,14 +84,14 @@ For testing purposes there are 23 products, 19 categories records in the databas
 
 
 ## **Features** ##
-* **Category** - Can be accessed at `/` or `/category/` Displays the 6 root categories with links to each category page.
+* **Category** - Can be accessed at `/` or `/category/` Displays the 6 root categories and its products count with links to each category page. 
 * **Category Products Page** - Can be accessed at `/category/{category_id}/products`. Displays all the products in that category or in its subcategories with statistics about the category and total sum of the product price including its quantity. Uses **Pagination** and Only 6 products are displayed in one page with their prices and images and each product is linked to its detail page. 
   * Statistics are displayed based on the provided tasks which are:
     * The price of the most expensive product in the category
     * The price of the cheapest product in the category
     * The average price of the products
     * The Total sum of all the products prices including its quantities.
-* **Product Detail Page** - Can be accessed `/category/{category_id}/products/{product_id}` and Displays the information about the individual Product such as id, name, description, price, parent categories, image and quantity.
+* **Product Detail Page** - Can be accessed `/category/{category_id}/products/{product_id}` and Displays the information about the individual Product such as id, name, description, price, ancestor categories, image and quantity.
 * **Admin Panel** - Can be accessed at `/admin/`. Default username: `admin`, password: `admin`.
 * **Database** - sqlite3 database is used.
 
