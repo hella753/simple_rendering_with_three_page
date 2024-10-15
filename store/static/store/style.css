@@ -6,6 +6,7 @@
     --light-pink: #E2BFD9;
     --dark-violet: #674188;
 }
+
 body {
     background-color: var(--light-peach);
     color: var(--mid-pink);
@@ -72,8 +73,8 @@ a:visited {
     margin-top: 10px;
 }
 
-
 /* ---------categories---------- */
+
 /* categories container uses grid */
 .categories {
     text-align: center;
@@ -104,8 +105,8 @@ a:visited {
     border-radius: 0;
 }
 
-
 /* ---------products---------- */
+
 /* products container uses grid */
 .products{
     text-align: center;
@@ -136,6 +137,7 @@ a:visited {
 }
 
 /* ---------product detail---------- */
+
 /* image css */
 .image_product{
     width: 600px;
