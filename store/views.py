@@ -56,13 +56,13 @@ def category_listings(request, category_id):
     cheapest = subcategories.aggregate(min_price=Min("product__product_price"))
     # საშუალო ფასი
     average_price = subcategories.aggregate(
-        avg_price=Avg("product__product_price")
+        avg_price=Avg("product__product_price", distinct=True)
     )
     # ვჯამავთ ყველა პროდუქტის ჯამი*რაოდენობას
     sum_total = subcategories.annotate(
         sum_each=F("product__product_quantity")*F("product__product_price")
     )
-    subtotal = sum_total.aggregate(subtotal=Sum("sum_each"))
+    subtotal = sum_total.aggregate(subtotal=Sum("sum_each", distinct=True))
 
     # ყველა პროდუქტი ჯამებით
     products = Product.objects.all().annotate(
