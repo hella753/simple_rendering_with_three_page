@@ -1,55 +1,56 @@
 {% load static %}
-
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <link rel="stylesheet" href="{% static 'store/style.css' %}">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link
-                rel="preconnect"
-                href="https://fonts.googleapis.com">
-        <link
-                rel="preconnect"
-                href="https://fonts.gstatic.com" crossorigin>
-        <link
-                href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap"
-                rel="stylesheet">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Georgian:wght@100..900&display=swap" rel="stylesheet">
-        <title>{{ product.product_name }}</title>
-    </head>
-    <body>
-        <p>
-            {% for cat in product.product_categories %}
-                <p class="cat_p">
-                    {{ cat.name }} |
-                </p>
-            {% endfor %}
+<head>
+    <!--for styles-->
+    <link rel="stylesheet" href="{% static 'store/style.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--From Google Fonts Afacad Flux and Noto Serif Georgian-->
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap"
+          rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Georgian:wght@100..900&display=swap"
+          rel="stylesheet">
+    <title>{{ product.product_name }}</title>
+</head>
+<body>
+<p>
+    <!--Displays the Ancestor Categories-->
+    {% for cat in product.product_categories %}
+        <p class="cat_p">
+            {{ cat.name }} |
         </p>
-        <div>
-            <div class="ending_div">
-                <p class="image_p">
-                    <img class="image_product" src="{{ product.product_image }}"  alt="{{ product }}"/>
-                </p>
-                <div class="product_info">
-                    <h1 class="title align_start for_margin">{{ product.product_name }}</h1>
-                    <p class="align_start prod_id">
-                        პროდუქტის ID: {{ product_id }}
-                    </p>
-                    <p class="price">
-                        <span class="price_big">₾{{ product.product_price }} </span>
-                    </p>
-                    <p class="desc">
-                        პროდუქტის აღწერა: <p class="description align_start">{{ product.product_description }}</p>
-                    </p>
-
-                    <p class="align_start">
-                        <span class="maragi">პროდუქტის რაოდენობა მარაგში:</span>
-                        <p class="align_start">{{ product.product_quantity }}</p>
-                    </p>
-                </div>
-            </div>
+    {% endfor %}
+</p>
+<div>
+    <!--Displays Product Information: image, id, price, description and quantity-->
+    <div class="product_info">
+        <p class="image_p">
+            <img class="image_product" src="{{ product.product_image }}" alt="{{ product }}"/>
+        </p>
+        <div class="product_info">
+            <h1 class="title align_start for_margin">{{ product.product_name }}</h1>
+            <p class="align_start prod_id">
+                პროდუქტის ID: {{ product_id }}
+            </p>
+            <p class="price">
+                <span class="price_big">₾{{ product.product_price }} </span>
+            </p>
+            <p class="desc">
+                პროდუქტის აღწერა:
+            <p class="description align_start">{{ product.product_description }}</p>
+            </p>
+            <p class="align_start">
+                <span class="maragi">პროდუქტის რაოდენობა მარაგში:</span>
+            <p class="align_start">{{ product.product_quantity }}</p>
+            </p>
         </div>
-    </body>
+    </div>
+</div>
+</body>

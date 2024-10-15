@@ -1,6 +1,7 @@
 from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
 
+
 class Category(MPTTModel):
     category_name = models.CharField("სახელი", max_length=100, null=True)
     category_description = models.TextField("აღწერა", null=True, blank=True)
@@ -15,7 +16,6 @@ class Category(MPTTModel):
 
     class MPTTMeta:
         order_insertion_by = ['category_name']
-
 
     def __str__(self):
         return f"{self.category_name}"

@@ -1,73 +1,80 @@
 {% load static %}
-
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <link rel="stylesheet" href="{% static 'store/style.css' %}">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link
-                rel="preconnect"
-                href="https://fonts.googleapis.com">
-        <link
-                rel="preconnect"
-                href="https://fonts.gstatic.com" crossorigin>
-        <link
-                href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap"
-                rel="stylesheet">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Georgian:wght@100..900&display=swap" rel="stylesheet">
-        <title>{{ category.category_name }}</title>
-    </head>
-    <body>
-        <a href="/">დაბრუნდი უკან</a>
-        <h1 class="title">{{ category.category_name }}</h1>
-        <h2 class="title">
-            პროდუქტები ამ კატეგორიაში
-        </h2>
-        <div>
-            <p class="description">
-                {{ category.category_description }}
-            </p>
-            <div>
-                <p>სტატისტიკა:</p>
-                <p>ყველაზე ძვირიანი პროდუქტის ფასი: {{ max_price }} ლარი</p>
-                <p>ყველაზე იაფიანი პროდუქტის ფასი: {{ min_price }} ლარი</p>
-                <p>პროდუქტების საშუალო ფასი: {{ average }} ლარი</p>
-                <p>პროდუქტების ჯამური ფასი: {{ all_sum }} ლარი</p>
-            </div>
-        </div>
-        <div class="products">
-            {% for product_obj in products_objects %}
-                <li class="product">
-                    <a style="color: #674188" class="link_to_detail" href="http://localhost:8000/category/{{ category.id }}/products/{{ product_obj.id }}">
-                        <div>
-                            <img class="image" src="http://localhost:8000/media/{{ product_obj.image }}"  alt="{{ product_obj }}"/>
-                            <p>{{ product_obj.name }}</p>
-                            <p>ერთეულის ფასი: {{ product_obj.price }}</p>
-                            <p>მარაგის საერთო ჯამური ღირებულება: {{ product_obj.total_sum }}</p>
-                        </div>
-                    </a>
-                </li>
-            {% endfor %}
-        </div>
-        <div class="pagination">
-            <span>
-                {% if products_objects.has_previous %}
-                    <a href="?page=1">&laquo; პირველი</a>
-                    <a href="?page={{ products_objects.previous_page_number }}">წინა</a>
-                {% endif %}
+<head>
+    <!--for styles-->
+    <link rel="stylesheet" href="{% static 'store/style.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--From Google Fonts Afacad Flux and Noto Serif Georgian-->
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap"
+          rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Georgian:wght@100..900&display=swap"
+          rel="stylesheet">
+    <title>{{ category.category_name }}</title>
+</head>
 
-                <span class="current">
-                    გვერდი {{ products_objects.number }} დან {{ products_objects.paginator.num_pages }}.
-                </span>
+<body>
+<!--Go back Link-->
+<a href="/">დაბრუნდი უკან</a>
+<h1 class="title">{{ category.category_name }}</h1>
+<h2 class="title">
+    პროდუქტები ამ კატეგორიაში
+</h2>
+<div>
+    <!--Displays the Category description-->
+    <p class="description">
+        {{ category.category_description }}
+    </p>
+    <!--Displays the Statistics based on the provided tasks-->
+    <div>
+        <p>სტატისტიკა: </p>
+        <p>ყველაზე ძვირიანი პროდუქტის ფასი: {{ max_price }} ლარი</p>
+        <p>ყველაზე იაფიანი პროდუქტის ფასი: {{ min_price }} ლარი</p>
+        <p>პროდუქტების საშუალო ფასი: {{ average }} ლარი</p>
+        <p>პროდუქტების ჯამური ფასი: {{ all_sum }} ლარი</p>
+    </div>
+</div>
+<div class="products">
+    <!--Displays the Products with images, name, unit price and price*quantity-->
+    {% for product_obj in products_objects %}
+        <li class="product">
+            <a class="link_to_detail"
+               href="http://localhost:8000/category/{{ category.id }}/products/{{ product_obj.id }}">
+                <div>
+                    <img class="image" src="http://localhost:8000/media/{{ product_obj.image }}"
+                         alt="{{ product_obj }}"/>
+                    <p>{{ product_obj.name }}</p>
+                    <p>ერთეულის ფასი: {{ product_obj.price }}</p>
+                    <p>მარაგის საერთო ჯამური ღირებულება: {{ product_obj.total_sum }}</p>
+                </div>
+            </a>
+        </li>
+    {% endfor %}
+</div>
+<!--For pagination-->
+<div class="pagination">
+    <span>
+        {% if products_objects.has_previous %}
+            <a href="?page=1">&laquo; პირველი</a>
+            <a href="?page={{ products_objects.previous_page_number }}">წინა</a>
+        {% endif %}
 
-                {% if products_objects.has_next %}
-                    <a href="?page={{ products_objects.next_page_number }}">შემდეგი</a>
-                    <a href="?page={{ products_objects.paginator.num_pages }}">ბოლო &raquo;</a>
-                {% endif %}
-            </span>
-        </div>
-    </body>
+        <span class="current">
+            გვერდი {{ products_objects.number }} დან {{ products_objects.paginator.num_pages }}.
+        </span>
+
+        {% if products_objects.has_next %}
+            <a href="?page={{ products_objects.next_page_number }}">შემდეგი</a>
+            <a href="?page={{ products_objects.paginator.num_pages }}">ბოლო &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+</body>
 </html>
