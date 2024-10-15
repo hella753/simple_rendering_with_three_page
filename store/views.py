@@ -1,3 +1,5 @@
+from enum import unique
+
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from .models import Category, Product
@@ -17,6 +19,7 @@ def index(request):
         )
         # ვამატებთ count-ს რომელიც დაითვლის თითოეული ქვეკატეგორიის პროდუქტების რაოდენობას
         product_counted = subcategories.annotate(products_count=Count("product"))
+        print(subcategories)
 
         # ვჯამავთ თითოეულ ქვეკატეგორიაში products_count ველის მნიშვნელობებს
         total_product_count = product_counted.aggregate(total_count=Sum("products_count"))
@@ -48,22 +51,20 @@ def category_listings(request, category_id):
     sum_total = subcategories.annotate(sum_each=F("product__product_quantity")*F("product__product_price"))
     subtotal = sum_total.aggregate(subtotal=Sum("sum_each"))
 
+    # ყველა პროდუქტი
+    products = Product.objects.all().annotate(sum=F("product_quantity")*F("product_price"))
+    # პროდუქტები რომლებიც არიან ამ ქვეკატეგორიებიდან ერთ-ერთში მაინც
+    products = products.filter(product_category__in=subcategories).distinct()
     product_dict = {}
     product_list = []
-    for subcategory in subcategories:
-        # ყველა პროდუქტი ქვეკატეგორიაში
-        sets = subcategory.product_set.all()
-
-        # თითოეული პროდუქტის ფასი*რაოდენობა
-        sets = sets.annotate(sum=F("product_quantity")*F("product_price"))
-        for each_set in sets:
-            product_dict["name"] = each_set.product_name
-            product_dict["total_sum"] = each_set.sum
-            product_dict["price"] = each_set.product_price
-            product_dict["image"] = each_set.product_image
-            product_dict["id"] = each_set.id
-            product_list.append(product_dict)
-            product_dict = {}
+    for prod in products:
+        product_dict["name"] = prod.product_name
+        product_dict["total_sum"] = prod.sum
+        product_dict["price"] = prod.product_price
+        product_dict["image"] = prod.product_image
+        product_dict["id"] = prod.id
+        product_list.append(product_dict)
+        product_dict = {}
 
     paginator = Paginator(product_list, 6)
     page_number = request.GET.get('page')
